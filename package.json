@@ -1,0 +1,11 @@
+{
+  "name": "1dv610-labb2",
+  "version": "1.0.0",
+  "description": "Labb2",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "author": "Adam Sjöström",
+  "license": "MIT"
+}
