@@ -3,7 +3,8 @@
  *
  */
 
-testArray = [1, '2', true, function() { console.log('This is a function in an array.')}, { name: 'adam' }, null, NaN, Infinity, , [1, 2, 3, 4]]
+const testArray = [1, '2', true, function() { 
+  console.log('This is a function in an array.') }, { name: 'adam' }, null, NaN, Infinity, , [1, 2, 3, 4]]
 
 function getArrayContentType(array) {
   const types = []
@@ -16,44 +17,115 @@ function getArrayContentType(array) {
   return types
 }
 
-function getDetailedArrayContentType(array) {
+Array.prototype.getDetailedArrayContentType = function() {
   const types = []
 
-  for (let i = 0; i < array.length; i++) {
-    if (typeof array[i] === 'string') {
-      types.push(`A string containing ${array[i].length} character(s).`)
-    } else if (typeof array[i] === 'boolean') {
-      types.push(`The boolean value: ${array[i]}`)
-    } else if (typeof array[i] === 'object') {
-      if (Array.isArray(array[i])) {
-        types.push(`An array, with a length of: ${array[i].length} elements`)
-      } else if (array[i] === null) {
-        types.push(`Null`)
+  for (let i = 0; i < this.length; i++) {
+    if (typeof this[i] === 'string') {
+      types.push(`Index: ${i}, String`)
+    } else if (typeof this[i] === 'boolean') {
+      types.push(`Index: ${i}, Boolean: ${this[i]}`)
+    } else if (typeof this[i] === 'object') {
+      if (Array.isArray(this[i])) {
+        types.push(`Index: ${i}, Array: ${this[i].length} elements`)
+      } else if (this[i] === null) {
+        types.push(`Index: ${i}, Null`)
       } else {
-        types.push('An object that is neither an Array or null')
+        types.push(`Index: ${i}, Object: (Neither an array or null)`)
       }
-    } else if (typeof array[i] === 'undefined') {
-      if (!array.hasOwnProperty(i)) {
-        types.push('An empty slot')
+    } else if (typeof this[i] === 'undefined') {
+      if (!this.hasOwnProperty(i)) {
+        types.push(`Index: ${i}, Empty slot`)
       } else {
-        types.push('undefined')
+        types.push(`Index: ${i}, Undefined`)
       }
-    } else if (typeof array[i] === 'number') {
-        if (array[i] === NaN) {
-          types.push('NaN')
+    } else if (typeof this[i] === 'number') {
+        if (this[i] === NaN) {
+          types.push(`Index: ${i}, NaN`)
+        } else if (this[i] === Infinity) {
+          types.push(`Index: ${i}, Infinity`)
+        } else if (this[i] === -Infinity) {
+          types.push(`Index: ${i}, -Infinity`)
         } else {
-          types.push(typeof array[i])
+          types.push(`Index: ${i}, Number`)
         }
-    } else if (typeof array[i] === 'symbol') {
-      types.push(typeof array[i])
-    } else if (typeof array[i] === 'function') {
-      const functionToString = array[i].toString()
+    } else if (typeof this[i] === 'symbol') {
+      types.push(`Index: ${i}, Symbol`)
+    } else if (typeof this[i] === 'function') {
+      const functionToString = this[i].toString()
       const linesOfCode = functionToString.split('\n').length - 1
-      types.push(`A function with ${linesOfCode} lines of code`)
+      types.push(`Index: ${i}, Function: ${linesOfCode} line(s) of code`)
       }
     }
-    console.log(types)
+
+    return types
   }
 
+  function groupByPrimitiveType(array) {
+
+  }
+
+  Array.prototype.groupByMatchingKeyValue = function() {
+    const keyValueGroup = {}
+
+    for (let i = 0; i < this.length; i++) {
+      const currentObject = this[i]
+      const allKeys = Object.keys(currentObject)
+
+      for (let j = 0; j < allKeys.length; j++) {
+        const key = allKeys[j]
+        const value = currentObject[key]
+        const groupID = `${key}:${value}`
+
+        if (!keyValueGroup[groupID]) {
+          keyValueGroup[groupID] = []
+        }
+
+        keyValueGroup[groupID].push(currentObject)
+      }
+    }
+
+    const groupedArray = Object.values(keyValueGroup)
+
+    return groupedArray
+  }
+
+  Array.prototype.groupByObjectValue = function() {
+    const valueGroup = {}
+
+    for (let i = 0; i < this.length; i++) {
+      const currentObject = this[i]
+      const allKeys = Object.keys(currentObject)
+
+      for (let j = 0; j < allKeys.length; j++) {
+        const key = allKeys[j]
+        const value = currentObject[key]
+        const groupID = `${value}`
+
+        if (!valueGroup[groupID]) {
+          valueGroup[groupID] = []
+        }
+
+        valueGroup[groupID].push(currentObject)
+      }
+    }
+
+    const groupedArray = Object.values(valueGroup)
+
+    return groupedArray
+  }
+
+  Array.prototype.groupByObjectKeys = function() {
+    const keyGroup = {}
+  }
+
+  const testArray2 = [ { Name: 'Adam', Age: 20 }, { Name: 'Anna', Age: 23 }, { Name: 'Adam', Age: 21 }, { Nickname: 'Adam' }, { Name: 'Andreas', Age: 21 }, { Name: 'Andreas' }, { Nickname: 'Adam' }, { Nickname: 'Anna' }, { Nickname: 'Anna' }, { Haircolor: 'Orange' } ]
+
+  // [ [ { Name: 'Adam' }, { Name: 'Adam' } ], [ { Name: 'Anna' } ], [ { Name: 'Andreas' }, { Name: 'Andreas' } ] ]
+  // [ [ { Nickname: 'Adam' }, { Nickname: 'Adam' } ], [ { Nickname: 'Anna' }, { Nickname: 'Anna' } ] ]
+  // [ { Haircolor: 'Orange' } ]
+
 getArrayContentType(testArray)
-getDetailedArrayContentType(testArray)
+console.log(testArray.getDetailedArrayContentType())
+console.log(testArray2.groupByMatchingKeyValue())
+console.log(testArray2.groupByObjectValue())
