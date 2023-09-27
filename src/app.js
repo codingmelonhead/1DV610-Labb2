@@ -117,15 +117,44 @@ Array.prototype.getDetailedArrayContentType = function() {
 
   Array.prototype.groupByObjectKeys = function() {
     const keyGroup = {}
+
+    for (let i = 0; i < this.length; i++) {
+      const currentObject = this[i]
+      const allKeys = Object.keys(currentObject)
+      const sortKeys = allKeys.sort().join(',')
+
+      if (!keyGroup[sortKeys]) {
+        keyGroup[sortKeys] = []
+      }
+
+      keyGroup[sortKeys].push(currentObject)
+    }
+
+    const groupedArray = Object.values(keyGroup)
+
+    return groupedArray 
+  }
+
+  Array.prototype.findObjectValue = function(value) {
+    const values = []
+
+    for (let i = 0; i < this.length; i++) {
+      const currentObject = this[i]
+      const currentValues = Object.values(currentObject)
+
+      if (currentValues.includes(value)) {
+        values.push(currentObject)
+      }
+    }
+
+    return values
   }
 
   const testArray2 = [ { Name: 'Adam', Age: 20 }, { Name: 'Anna', Age: 23 }, { Name: 'Adam', Age: 21 }, { Nickname: 'Adam' }, { Name: 'Andreas', Age: 21 }, { Name: 'Andreas' }, { Nickname: 'Adam' }, { Nickname: 'Anna' }, { Nickname: 'Anna' }, { Haircolor: 'Orange' } ]
-
-  // [ [ { Name: 'Adam' }, { Name: 'Adam' } ], [ { Name: 'Anna' } ], [ { Name: 'Andreas' }, { Name: 'Andreas' } ] ]
-  // [ [ { Nickname: 'Adam' }, { Nickname: 'Adam' } ], [ { Nickname: 'Anna' }, { Nickname: 'Anna' } ] ]
-  // [ { Haircolor: 'Orange' } ]
 
 getArrayContentType(testArray)
 console.log(testArray.getDetailedArrayContentType())
 console.log(testArray2.groupByMatchingKeyValue())
 console.log(testArray2.groupByObjectValue())
+console.log(testArray2.groupByObjectKeys())
+console.log(testArray2.findObjectValue('Adam'))
