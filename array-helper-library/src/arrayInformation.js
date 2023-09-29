@@ -1,3 +1,11 @@
+/**
+ * Retrieves the primitive types of elements in an array.
+ *
+ * @param {Array} array - The array to analyze.
+ * @returns {Array} An array of strings representing the primitive types of elements in the input array.
+ * @throws {Error} Throws an error if the input argument is not an array.
+ */
+
 export function getPrimitiveTypes(array) {
   if (!Array.isArray(array)) {
     throw new Error(`The provided argument must be an Array`)
@@ -12,11 +20,19 @@ export function getPrimitiveTypes(array) {
   return types
 }
 
+/**
+ * Retrieves detailed information about the types of every element in an array.
+ *
+ * @param {Array} array - The array to analyze.
+ * @returns {Array} An array of strings representing detailed type information for elements in the input array.
+ * @throws {Error} Throws an error if the input argument is not an array.
+ */
+
 export function getDetailedTypes(array) {
   if (!Array.isArray(array)) {
     throw new Error(`The provided argument must be an Array`)
   }
-  
+
   const types = []
 
   for (let i = 0; i < array.length; i++) {

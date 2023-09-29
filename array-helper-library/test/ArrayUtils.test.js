@@ -116,6 +116,48 @@ describe('ArrayUtils.groupByMatchingKeyValue', () => {
   })
 })
 
-describe('ArrayUtils.groupByObjectValue', () => {
-  it('')
+describe('ArrayUtils.groupByObjectValues', () => {
+  it('Should return an array that contains arrays with objects that have mathcing values', () => {
+    const exampleArray = [{ Name: 'Adam', Age: 20 }, { Name: 'Anna', Age: 23 }, { Name: 'Adam', Age: 21 }, { Nickname: 'Adam' }, { Name: 'Andreas', Age: 21 }, { Name: 'Andreas' }, { Nickname: 'Adam' }, { Nickname: 'Anna' }, { Nickname: 'Anna' }, { Haircolor: 'Orange' }]
+
+    const arrayUtils = new ArrayUtils(exampleArray)
+    const groupedObjectValues = arrayUtils.groupByObjectValues()
+
+    expect(groupedObjectValues).toEqual(
+      [[{ Name: 'Adam', Age: 20 }], [{ Name: 'Adam', Age: 21 }, { Name: 'Andreas', Age: 21 }], [{ Name: 'Anna', Age: 23 }], [{ Name: 'Adam', Age: 20 }, { Name: 'Adam', Age: 21 }, { Nickname: 'Adam' }, { Nickname: 'Adam' }], [{ Name: 'Anna', Age: 23 }, { Nickname: 'Anna' }, { Nickname: 'Anna' }], [{ Name: 'Andreas', Age: 21 }, { Name: 'Andreas' }], [{ Haircolor: 'Orange' }]]
+    )
+  })
+
+  it('Should throw an Error if not provided with an array', () => {
+    const notAnArray = 'Not an array'
+
+    const arrayUtils = new ArrayUtils(notAnArray)
+
+    expect(() => {
+      arrayUtils.groupByObjectValues()
+    }).toThrowError('The provided argument must be an Array')
+  })
+})
+
+describe('ArrayUtils.groupByObjectKeys', () => {
+  it('Should return an array that contains arrays with objects that have mathcing keys', () => {
+    const exampleArray = [{ Name: 'Adam', Age: 20 }, { Name: 'Anna', Age: 23 }, { Name: 'Adam', Age: 21 }, { Nickname: 'Adam' }, { Name: 'Andreas', Age: 21 }, { Name: 'Andreas' }, { Nickname: 'Adam' }, { Nickname: 'Anna' }, { Nickname: 'Anna' }, { Haircolor: 'Orange' }]
+
+    const arrayUtils = new ArrayUtils(exampleArray)
+    const groupedObjectKeys = arrayUtils.groupByObjectKeys()
+
+    expect(groupedObjectKeys).toEqual(
+      [[{ Name: 'Adam', Age: 20 }, { Name: 'Anna', Age: 23 }, { Name: 'Adam', Age: 21 }, { Name: 'Andreas', Age: 21 }], [{ Nickname: 'Adam' }, { Nickname: 'Adam' }, { Nickname: 'Anna' }, { Nickname: 'Anna' }], [{ Name: 'Andreas' }], [{ Haircolor: 'Orange' }]]
+    )
+  })
+
+  it('Should throw an Error if not provided with an array', () => {
+    const notAnArray = 'Not an array'
+
+    const arrayUtils = new ArrayUtils(notAnArray)
+
+    expect(() => {
+      arrayUtils.groupByObjectKeys()
+    }).toThrowError('The provided argument must be an Array')
+  })
 })

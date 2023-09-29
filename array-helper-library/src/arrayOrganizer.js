@@ -1,3 +1,11 @@
+/**
+ * Groups key/value-pair objects in an array by matching key-value pairs.
+ *
+ * @param {Array} array - The array of objects to group.
+ * @returns {Array} An array of grouped objects based on matching key-value pairs.
+ * @throws {Error} Throws an error if the input argument is not an array.
+ */
+
 export function groupByMatchingKeyValue(array) {
   if (!Array.isArray(array)) {
     throw new Error(`The provided argument must be an Array`)
@@ -27,7 +35,15 @@ export function groupByMatchingKeyValue(array) {
   return groupedArray
 }
 
-export function groupByObjectValue(array) {
+/**
+ * Groups key/value-pair objects in an array by their values.
+ *
+ * @param {Array} array - The array of objects to group.
+ * @returns {Array} An array of grouped objects based on their values.
+ * @throws {Error} Throws an error if the input argument is not an array.
+ */
+
+export function groupByObjectValues(array) {
   if (!Array.isArray(array)) {
     throw new Error(`The provided argument must be an Array`)
   }
@@ -56,11 +72,19 @@ export function groupByObjectValue(array) {
   return groupedArray
 }
 
+/**
+ * Groups key/value-pair objects in an array by their keys.
+ *
+ * @param {Array} array - The array of objects to group.
+ * @returns {Array} An array of grouped objects based on their keys.
+ * @throws {Error} Throws an error if the input argument is not an array.
+ */
+
 export function groupByObjectKeys(array) {
   if (!Array.isArray(array)) {
     throw new Error(`The provided argument must be an Array`)
   }
-  
+
   const keyGroup = {}
 
   for (let i = 0; i < array.length; i++) {
