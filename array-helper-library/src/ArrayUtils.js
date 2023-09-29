@@ -1,6 +1,6 @@
-import { findObjectValue } from './arrayFinder.js'
-import { getPrimitiveTypes, getDetailedTypes } from './arrayInformation.js'
-import { groupByMatchingKeyValue, groupByObjectValues, groupByObjectKeys } from './arrayOrganizer.js'
+import { Finder } from './Finder.js'
+import { ArrayInformation } from './ArrayInformation.js'
+import { ArrayOrganizer } from './ArrayOrganizer.js'
 
 /**
  * Utility class for working with arrays.
@@ -20,6 +20,9 @@ export class ArrayUtils {
    */
   constructor(array) {
     this.array = array
+    this.finder = new Finder(array)
+    this.arrayOrganizer = new ArrayOrganizer(array)
+    this.arrayInformation = new ArrayInformation(array)
   }
 
   /**
@@ -30,7 +33,7 @@ export class ArrayUtils {
    * @throws {Error} Throws an error if the array is not an array.
    */
   findObjectValue(value) {
-    return findObjectValue(this.array, value)
+    return this.finder.findObjectValue(this.array, value)
   }
 
   /**
@@ -40,7 +43,7 @@ export class ArrayUtils {
    * @throws {Error} Throws an error if the array is not an array.
    */
   getPrimitiveTypes() {
-    return getPrimitiveTypes(this.array)
+    return this.arrayInformation.getPrimitiveTypes(this.array)
   }
 
   /**
@@ -50,7 +53,7 @@ export class ArrayUtils {
    * @throws {Error} Throws an error if the array is not an array.
    */
   getDetailedTypes() {
-    return getDetailedTypes(this.array)
+    return this.arrayInformation.getDetailedTypes(this.array)
   }
 
   /**
@@ -60,7 +63,7 @@ export class ArrayUtils {
    * @throws {Error} Throws an error if the array is not an array.
    */
   groupByMatchingKeyValue() {
-    return groupByMatchingKeyValue(this.array)
+    return this.arrayOrganizer.groupByMatchingKeyValue(this.array)
   }
 
   /**
@@ -70,7 +73,7 @@ export class ArrayUtils {
    * @throws {Error} Throws an error if the array is not an array.
    */
   groupByObjectValues() {
-    return groupByObjectValues(this.array)
+    return this.arrayOrganizer.groupByObjectValues(this.array)
   }
 
   /**
@@ -80,6 +83,6 @@ export class ArrayUtils {
    * @throws {Error} Throws an error if the array is not an array.
    */
   groupByObjectKeys() {
-    return groupByObjectKeys(this.array)
+    return this.arrayOrganizer.groupByObjectKeys(this.array)
   }
 }

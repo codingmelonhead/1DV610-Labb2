@@ -1,5 +1,7 @@
 # Array Helper Library
 
+To work with arrays can be a hazzle.
+
 The Array Helper Library is a JavaScript utility library that provides a set of functions to work with arrays. It offers various features for analyzing and organizing arrays of key/value-pair objects.
 
 ## Table of Contents

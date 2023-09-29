@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-sparse-arrays */
 import { ArrayUtils } from '../src/ArrayUtils'
 
 describe('ArrayUtils.findObjectValue', () => {
@@ -78,7 +80,7 @@ describe('ArrayUtils.getDetailedTypes', () => {
     const detailedTypesArray = arrayUtils.getDetailedTypes()
 
     expect(detailedTypesArray).toEqual(
-      ['Index: 0, Number', 'Index: 1, String', 'Index: 2, Boolean: true', 'Index: 3, Function: 2 line(s) of code', 'Index: 4, Object: (Neither an array or null)', 'Index: 5, Null', 'Index: 6, Number', 'Index: 7, Infinity', 'Index: 8, Empty slot', 'Index: 9, Array: 4 elements']
+      ['Index: 0, Number', 'Index: 1, String', 'Index: 2, Boolean: true', 'Index: 3, Function: 2 line(s) of code', 'Index: 4, Object: (Neither an array or null)', 'Index: 5, Null', 'Index: 6, NaN', 'Index: 7, Infinity', 'Index: 8, Empty slot', 'Index: 9, Array: 4 elements']
     )
   })
 

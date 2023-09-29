@@ -10,8 +10,9 @@
   "author": "Adam Sjöström",
   "license": "MIT",
   "devDependencies": {
-    "@babel/preset-env": "^7.22.20",
     "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.22.20",
+    "eslint": "^8.50.0",
     "jest": "^29.7.0"
   }
 }
