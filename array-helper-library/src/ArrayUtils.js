@@ -85,4 +85,8 @@ export class ArrayUtils {
   groupByObjectKeys() {
     return this.arrayOrganizer.groupByObjectKeys(this.array)
   }
+
+  groupByCallbackFunction(callbackFunction) {
+    return this.arrayOrganizer.groupByCallbackFunction(this.array, callbackFunction)
+  }
 }

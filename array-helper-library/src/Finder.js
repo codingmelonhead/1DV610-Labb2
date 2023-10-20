@@ -46,4 +46,39 @@ export class Finder {
 
     return values
   }
+
+  /**
+  * Groups objects within an array based on a specified key.
+  * 
+  * @param {Array} array 
+  * @param {string} key 
+  * @returns {Object} An object where keys are unique values of the specified   key, and values are arrays of objects that have matching values for that key.
+  * @throws {Error} Throws an error if the array argument is not an array or if the key argument is missing or undefined
+  */
+  groupBy(array, key) {
+    if (!Array.isArray(array)) {
+      throw new Error('The array argument must be an array');
+    } else if (key === undefined) {
+      throw new Error('The provided key argument is missing or undefined');
+    }
+
+    const groupedObjects = {};
+
+    for (let i = 0; i < array.length; i++) {
+      const currentObject = array[i];
+      const keyValue = currentObject[key];
+
+      if (keyValue === undefined) {
+        continue; // Skip objects without the specified key
+      }
+
+      if (!groupedObjects[keyValue]) {
+        groupedObjects[keyValue] = [];
+      }
+
+      groupedObjects[keyValue].push(currentObject);
+    } 
+
+    return groupedObjects;
+  }
 }

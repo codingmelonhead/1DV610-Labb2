@@ -49,72 +49,96 @@ export class ArrayOrganizer {
     return groupedArray
   }
 
-/**
- * Groups key/value-pair objects in an array by their values.
- *
- * @param {Array} array - The array of objects to group.
- * @returns {Array} An array of grouped objects based on their values.
- * @throws {Error} Throws an error if the input argument is not an array.
- */
+  /**
+  * Groups key/value-pair objects in an array by their values.
+  *
+  * @param {Array} array - The array of objects to group.
+  * @returns {Array} An array of grouped objects based on their values.
+  * @throws {Error} Throws an error if the input argument is not an array.
+  */
 
-groupByObjectValues(array) {
-  if (!Array.isArray(array)) {
-    throw new Error(`The provided argument must be an Array`)
+  groupByObjectValues(array) {
+    if (!Array.isArray(array)) {
+      throw new Error(`The provided argument must be an Array`)
+    }
+
+    const valueGroup = {}
+
+    for (let i = 0; i < array.length; i++) {
+      const currentObject = array[i]
+      const allKeys = Object.keys(currentObject)
+
+      for (let j = 0; j < allKeys.length; j++) {
+        const key = allKeys[j]
+        const value = currentObject[key]
+        const groupID = `${value}`
+
+        if (!valueGroup[groupID]) {
+          valueGroup[groupID] = []
+        }
+
+        valueGroup[groupID].push(currentObject)
+      }
+    }
+
+    const groupedArray = Object.values(valueGroup)
+
+    return groupedArray
   }
 
-  const valueGroup = {}
+  /**
+  * Groups key/value-pair objects in an array by their keys.
+  *
+  * @param {Array} array - The array of objects to group.
+  * @returns {Array} An array of grouped objects based on their keys.
+  * @throws {Error} Throws an error if the input argument is not an array.
+  */
+  groupByObjectKeys(array) {
+    if (!Array.isArray(array)) {
+      throw new Error(`The provided argument must be an Array`)
+    }
 
-  for (let i = 0; i < array.length; i++) {
-    const currentObject = array[i]
-    const allKeys = Object.keys(currentObject)
+    const keyGroup = {}
 
-    for (let j = 0; j < allKeys.length; j++) {
-      const key = allKeys[j]
-      const value = currentObject[key]
-      const groupID = `${value}`
+    for (let i = 0; i < array.length; i++) {
+      const currentObject = array[i]
+      const allKeys = Object.keys(currentObject)
+      const sortKeys = allKeys.sort().join(',')
 
-      if (!valueGroup[groupID]) {
-        valueGroup[groupID] = []
+      if (!keyGroup[sortKeys]) {
+        keyGroup[sortKeys] = []
       }
 
-      valueGroup[groupID].push(currentObject)
-    }
-  }
-
-  const groupedArray = Object.values(valueGroup)
-
-  return groupedArray
-}
-
-/**
- * Groups key/value-pair objects in an array by their keys.
- *
- * @param {Array} array - The array of objects to group.
- * @returns {Array} An array of grouped objects based on their keys.
- * @throws {Error} Throws an error if the input argument is not an array.
- */
-
-groupByObjectKeys(array) {
-  if (!Array.isArray(array)) {
-    throw new Error(`The provided argument must be an Array`)
-  }
-
-  const keyGroup = {}
-
-  for (let i = 0; i < array.length; i++) {
-    const currentObject = array[i]
-    const allKeys = Object.keys(currentObject)
-    const sortKeys = allKeys.sort().join(',')
-
-    if (!keyGroup[sortKeys]) {
-      keyGroup[sortKeys] = []
+      keyGroup[sortKeys].push(currentObject)
     }
 
-    keyGroup[sortKeys].push(currentObject)
+    const groupedArray = Object.values(keyGroup)
+
+    return groupedArray 
   }
 
-  const groupedArray = Object.values(keyGroup)
+  /**
+  * Groups items in an array based on a custom key extraction function.
+  *
+  * @param {Array} array Target array
+  * @param {Function} getKeyFunction Function to execute
+  * @returns An array of arrays where each inner array contains items grouped by the extracted keys.
+  */
+  groupByCallbackFunction(array, callbackFunction) {
+    if (typeof getKeyFunction !== 'function') {
+      throw new Error('getKeyFunction must be a function');
+    }
 
-  return groupedArray 
-}
+    const groups = {};
+
+    for (const item of array) {
+      const key = callbackFunction(item);
+      if (!groups[key]) {
+        groups[key] = [];
+      }
+      groups[key].push(item);
+    }
+
+    return Object.values(groups);
+  }
 }
