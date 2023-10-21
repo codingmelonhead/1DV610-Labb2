@@ -121,7 +121,7 @@ export class ArrayOrganizer {
   * Groups items in an array based on a custom key extraction function.
   *
   * @param {Array} array Target array
-  * @param {Function} getKeyFunction Function to execute
+  * @param {*} callbackFunction Function to execute
   * @returns An array of arrays where each inner array contains items grouped by the extracted keys.
   */
   groupByCallbackFunction(array, callbackFunction) {
