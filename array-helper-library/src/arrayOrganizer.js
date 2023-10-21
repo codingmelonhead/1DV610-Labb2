@@ -125,10 +125,6 @@ export class ArrayOrganizer {
   * @returns An array of arrays where each inner array contains items grouped by the extracted keys.
   */
   groupByCallbackFunction(array, callbackFunction) {
-    if (typeof getKeyFunction !== 'function') {
-      throw new Error('getKeyFunction must be a function');
-    }
-
     const groups = {};
 
     for (const item of array) {
