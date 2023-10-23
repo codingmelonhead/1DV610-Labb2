@@ -1,93 +1,104 @@
-/**
- * Array information class for gathering information about arrays.
- * 
- * This class provides a set of methods to gather information about arrays.
- */
-
 export class ArrayInformation {
   /**
-   * Create an instance of the ArrayInformation class with the provided array.
+   * Get the primitive types of elements in the array.
    *
-   * @constructor
-   * @param {Array} array - The array to be operated on.
+   * @param {Array} array Target array
+   * @returns {Array} An array of strings representing the primitive types of elements in the array.
+   * @throws {Error} Throws an error if the array is not an array.
    */
-  constructor(array) {
-    this.array = array
+  getPrimitiveTypes(array) {
+    this.#validateArrayIsAnArray(array)
+    return this.#extractPrimitiveTypes(array)
   }
 
   /**
-  * Retrieves the primitive types of elements in an array.
-  *
-  * @param {Array} array - The array to analyze.
-  * @returns {Array} An array of strings representing the primitive types of elements in the input array.
-  * @throws {Error} Throws an error if the input argument is not an array.
-  */
-  getPrimitiveTypes(array) {
+   * Get detailed type information about elements in the array.
+   *
+   * @param {Array} array Target array
+   * @returns {Array} An array of strings representing detailed type information for elements in the array.
+   * @throws {Error} Throws an error if the array is not an array.
+   */
+  getDetailedTypes(array) {
+    this.#validateArrayIsAnArray(array)
+    return this.#generateDetailedTypesArray(array)
+  }
+
+  #validateArrayIsAnArray(array) {
     if (!Array.isArray(array)) {
-      throw new Error(`The provided argument must be an Array`)
+      throw new Error('The provided argument must be an Array');
     }
+  }
 
+  #extractPrimitiveTypes(array) {
     const types = []
-
     for (let i = 0; i < array.length; i++) {
       types.push(typeof array[i])
     }
-
     return types
   }
 
-  /**
-  * Retrieves detailed information about the types of every element in an array.
-  *
-  * @param {Array} array - The array to analyze.
-  * @returns {Array} An array of strings representing detailed type information for elements in the input array.
-  * @throws {Error} Throws an error if the input argument is not an array.
-  */
-  getDetailedTypes(array) {
-    if (!Array.isArray(array)) {
-      throw new Error(`The provided argument must be an Array`)
-    }
-
-    const types = []
-
+  #generateDetailedTypesArray(array) {
+    const types = [];
     for (let i = 0; i < array.length; i++) {
-      if (typeof array[i] === 'string') {
-        types.push(`Index: ${i}, String`)
-      } else if (typeof array[i] === 'boolean') {
-        types.push(`Index: ${i}, Boolean: ${array[i]}`)
-      } else if (typeof array[i] === 'object') {
-        if (Array.isArray(array[i])) {
-         types.push(`Index: ${i}, Array: ${array[i].length} elements`)
-       } else if (array[i] === null) {
-         types.push(`Index: ${i}, Null`)
-        } else {
-        types.push(`Index: ${i}, Object: (Neither an array or null)`)
-        }
-      } else if (typeof array[i] === 'undefined') {
-        if (!Object.prototype.hasOwnProperty.call(array, i)) {
-         types.push(`Index: ${i}, Empty slot`)
-        } else {
-         types.push(`Index: ${i}, Undefined`)
-        }
-      } else if (typeof array[i] === 'number') {
-        if (isNaN(array[i])) {
-          types.push(`Index: ${i}, NaN`)
-         } else if (array[i] === Infinity) {
-           types.push(`Index: ${i}, Infinity`)
-          } else if (array[i] === -Infinity) {
-           types.push(`Index: ${i}, -Infinity`)
-          } else {
-           types.push(`Index: ${i}, Number`)
-         }
-      } else if (typeof array[i] === 'symbol') {
-        types.push(`Index: ${i}, Symbol`)
-      } else if (typeof array[i] === 'function') {
-        const functionToString = array[i].toString()
-        const linesOfCode = functionToString.split('\n').length - 1
-        types.push(`Index: ${i}, Function: ${linesOfCode} line(s) of code`)
-      }
+      types.push(this.#getDetailedTypeInfo(array, array[i], i));
     }
+    return types;
+  }
 
-    return types
+  #getDetailedTypeInfo(array, element, index) {
+    switch (typeof element) {
+      case 'string':
+        return `Index: ${index}, String`;
+      case 'boolean':
+        return `Index: ${index}, Boolean: ${element}`
+      case 'object':
+        return this.#getObjectDetails(element, index)
+      case 'undefined':
+        return this.#getUndefinedDetails(array, index)
+      case 'number':
+        return this.#getNumberDetails(element, index)
+      case 'symbol':
+        return `Index: ${index}, Symbol`
+      case 'function':
+        return this.#getFunctionDetails(element, index)
+      default:
+        return `Index: ${index}, Unknown type`
+    }
+  }
+
+  #getObjectDetails(element, index) {
+    if (Array.isArray(element)) {
+      return `Index: ${index}, Array: ${element.length} elements`
+    } else if (element === null) {
+      return `Index: ${index}, Null`
+    } else {
+      return `Index: ${index}, Object: (Neither an array or null)`
+    }
+  }
+
+  #getUndefinedDetails(array, index) {
+    if (!Object.prototype.hasOwnProperty.call(array, index)) {
+      return `Index: ${index}, Empty slot`
+    } else {
+      return `Index: ${index}, Undefined`
+    }
+  }
+
+  #getNumberDetails(element, index) {
+    if (isNaN(element)) {
+      return `Index: ${index}, NaN`
+    } else if (element === Infinity) {
+      return `Index: ${index}, Infinity`
+    } else if (element === -Infinity) {
+      return `Index: ${index}, -Infinity`
+    } else {
+      return `Index: ${index}, Number`
+    }
+  }
+
+  #getFunctionDetails(element, index) {
+    const functionToString = element.toString()
+    const linesOfCode = functionToString.split('\n').length - 1
+    return `Index: ${index}, Function: ${linesOfCode} line(s) of code`
   }
 }

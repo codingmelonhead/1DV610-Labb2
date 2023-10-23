@@ -20,9 +20,9 @@ export class ArrayUtils {
    */
   constructor(array) {
     this.array = array
-    this.finder = new Finder(array)
-    this.arrayOrganizer = new ArrayOrganizer(array)
-    this.arrayInformation = new ArrayInformation(array)
+    this.finder = new Finder()
+    this.arrayOrganizer = new ArrayOrganizer()
+    this.arrayInformation = new ArrayInformation()
   }
 
   /**
@@ -86,6 +86,12 @@ export class ArrayUtils {
     return this.arrayOrganizer.groupByObjectKeys(this.array)
   }
 
+  /**
+  * Groups items in an array based on a custom key extraction function.
+  *
+  * @param {Function} callbackFunction Function to execute
+  * @returns {Array} An array of arrays where each inner array contains items grouped by the extracted keys.
+  */
   groupByCallbackFunction(callbackFunction) {
     return this.arrayOrganizer.groupByCallbackFunction(this.array, callbackFunction)
   }

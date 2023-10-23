@@ -42,7 +42,7 @@ describe('ArrayUtils.findObjectValue', () => {
 
     expect(() => {
       arrayUtils.findObjectValue()
-    }).toThrowError('The provided value argument is missing or undefined')
+    }).toThrowError('The provided argument is missing or undefined')
   })
 })
 
@@ -160,6 +160,35 @@ describe('ArrayUtils.groupByObjectKeys', () => {
 
     expect(() => {
       arrayUtils.groupByObjectKeys()
+    }).toThrowError('The provided argument must be an Array')
+  })
+})
+
+describe('ArrayUtils.groupByCallbackFunction', () => {
+  it('Should return an array that has grouped the elements into arrays according to element length', () => {
+    const exampleArray = ['apple', 'banana', 'cherry', 'date', 'egg', 'dog']
+
+    const arrayUtils = new ArrayUtils(exampleArray)
+    const groupedByCallbackFunction = arrayUtils.groupByCallbackFunction(item => item.length)
+    const expectedOutput = [
+      ['egg', 'dog'],
+      ['date'],
+      ['apple'],
+      ['banana', 'cherry']
+  ]
+
+    expect(groupedByCallbackFunction).toEqual(
+      expectedOutput
+    )
+  })
+
+  it('Should throw an Error if not provided with an array', () => {
+    const notAnArray = 'Not an array'
+
+    const arrayUtils = new ArrayUtils(notAnArray)
+
+    expect(() => {
+      arrayUtils.groupByCallbackFunction()
     }).toThrowError('The provided argument must be an Array')
   })
 })

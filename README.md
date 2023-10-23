@@ -15,6 +15,7 @@ The Array Helper Library is a JavaScript utility library that provides a set of 
   - [`groupByMatchingKeyValue`](#groupbymatchingkeyvalue)
   - [`groupByObjectValues`](#groupbyobjectvalues)
   - [`groupByObjectKeys`](#groupbyobjectkeys)
+  - [`groupByCallbackFunction`](#groupbycallbackfunction)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -57,7 +58,7 @@ const exampleArray = [
   { Name: 'Adam', Age: 21 }
 ]
 
-const arrayUtils = new ArrayUtils(myArray)
+const arrayUtils = new ArrayUtils(exampleArray)
 
 const foundObjects = arrayUtils.findObjectValue('Adam')
 console.log(foundObjects)
@@ -244,16 +245,48 @@ console.log(groupedArray)
 // ]
 ```
 
+### `groupByCallbackFunction`
+
+The `groupByCallbackFunction(array, callbackFunction)` function groups elements in an array depending on the provided function.
+
+#### Parameters
+
+- `array` (Array): The array to be grouped.
+- `callbackFunction` (Function): The provided function deciding grouping logic.
+
+#### Returns
+
+- (Array): An array of arrays.
+
+#### Example
+
+```javascript
+import { ArrayUtils } from 'array-helper-library'
+
+const exampleArray = ['apple', 'banana', 'cherry', 'date', 'egg', 'dog']
+
+const arrayUtils = new ArrayUtils(exampleArray)
+const groupedArray = groupByCallbackFunction(item => item.length)
+console.log(groupedArray)
+// Output: [
+//  ['egg', 'dog'],
+//  ['date'], 
+//  ['apple'], 
+//  ['banana', 'cherry']
+// ]
+```
+
 ## Contributing
 
 Contributions to the **Array Helper Library** are welcome! If you have any ideas, bug reports, or feature requests, please open an issue on the GitHub repository. To contribute code or documentation, follow these steps:
 
 1. Fork the repository.
 2. Create a new branch for your feature or bug fix: `git checkout -b feature-name`.
-3. Make your changes and commit them with clear, concise commit messages.
-4. Push your changes to your fork: `git push origin feature-name`.
-5. Open a pull request to the `main` branch of the original repository.
-6. Your pull request will be reviewed, and once approved, it will be merged.
+3. Make your changes and test them.
+4. Commit them with clear, concise commit messages.
+5. Push your changes to your fork: `git push origin feature-name`.
+6. Open a pull request to the `main` branch of the original repository.
+7. Your pull request will be reviewed, and once approved, it will be merged.
 
 Please ensure that your code adheres to the project's coding standards and that you have included tests for your changes when applicable.
 
